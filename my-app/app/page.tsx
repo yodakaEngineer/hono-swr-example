@@ -1,19 +1,10 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useGetMessage } from './hooks/useGetMessage'
 
 export default function Home() {
-  const [message, setMessage] = useState()
+  const { data } = useGetMessage()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/hello')
-      const { message } = await res.json()
-      setMessage(message)
-    }
-    fetchData()
-  }, [])
+  if (!data) return <p>Loading...</p>
 
-  if (!message) return <p>Loading...</p>
-
-  return <p>{message}</p>
+  return <p>{data.message}</p>
 }
