@@ -22,6 +22,7 @@ export const useGetMessage = (
     fetcher,
     {
       suspense: true,
+      // 非SSRの場合はuse clientすればfallbackDataはいらない
       fallbackData: {
         message: 'Loading...',
       },
