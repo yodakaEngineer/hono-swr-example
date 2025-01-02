@@ -21,10 +21,12 @@ export const generateSWRKey = (
 }
 
 type ServerError =
+  // Serverからバリデーションエラー以外のエラーを返す場合、必ずこの形式にする
   | {
     message?: string
     code?: string
   }
+  // Serverからバリデーションエラーを返す場合、必ずこの形式にする
   | {
     errors: {
       field?: string
@@ -59,6 +61,7 @@ export const useHandleResponse = () => {
         )
         if (res.status === 401) {
           await logout()
+          // SWRにハンドルさせるためにthrowする
           throw error
         }
         const data = await res.json()
@@ -75,6 +78,7 @@ export const useHandleResponse = () => {
         }
         error.info = errorInfo
         error.status = res.status
+        // SWRにハンドルさせるためにthrowする
         throw error
       }
       return await res.json()
