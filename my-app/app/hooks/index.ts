@@ -35,7 +35,6 @@ export type HttpError<T extends ServerError = ServerError> = Error & {
   info?: T
   status?: number
 }
-export type SuccessResponse<T> = T extends HttpError['info'] ? never : T
 
 export const useClient = () => {
   const { token } = useAuth()
